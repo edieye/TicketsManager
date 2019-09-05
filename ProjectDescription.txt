@@ -1,0 +1,1 @@
+Our project made a functional database for both employees and customers to manage tickets and their sales. We included event searches for the customers, and a way for the employees to query about customers.

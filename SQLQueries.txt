@@ -1,0 +1,61 @@
+
+SQL statements:
+
+1.	Selection and Projection Query:
+Finds ticket information for a customer:
+SELECT t.ticketNum, e.title FROM ticket t, event_create e, has_ticket ht WHERE t.custID = 3 AND t.ticketNum = ht.ticketNum AND e.eventID = ht.eventID
+-> goto customer, enter custID to be 3 or set it to 2 (for a different result)
+
+2.	Join Query:
+Find purchase by event:
+SELECT distinct t.custID, ec.eventID, ec.title, ec.dateTime  FROM ticket t INNER JOIN has_ticket ht on ht.ticketNum = t.ticketNum INNER JOIN event_create ec on ht.eventID = ec.eventID WHERE ec.eventID = 1111
+->go to employee window, enter event id to be 1111 or can enter 1112 (for a different result)
+
+
+3.	Division Query:
+Find the customer that attended all events:
+SELECT custID from customer c WHERE NOT EXISTS (SELECT DISTINCT eventID FROM event_create e where NOT EXISTS (select c.custID from ticket t, has_ticket ht where e.eventID = ht.eventID  AND ht.ticketNum = t.ticketNum AND c.custID = t.custID
+->in employee,  view most loyal customer
+
+4.	Aggregation Query:
+Find the total number of tickets purchased for a customer:
+select SUM(ticsPurchased) as numberTicketsPurchased FROM ticket where custID = 6
+->In customer, enter custID to be 6 to be tickets and total number of tickets 
+
+5.	Nested Aggregation With group-by:
+Find the cheapest ticket:
+SELECT MIN(t.ticPrice) as ticketPrice from ticket t, has_ticket tc where t.ticketNum = tc.ticketNum and (select COUNT(*) from event_create e where e.eventID = tc.eventID AND e.capacity > e.ticSold GROUP by e.vID)
+-> In customer, click find available tickets then buy cheapest ticket
+
+6.	Delete Operation:
+Delete an employee:
+DELETE FROM employee WHERE eid = 1
+->Show that employee ID of 1 is in database, then in employee, enter delete employee ID to be 1, then show that it deleted in the database
+
+
+
+7.	Update:
+Refund a ticket for a customer:
+UPDATE event_create ec INNER JOIN has_ticket ht on ec.eventID = ht.eventID  SET ec.ticSold = ec.ticSold-1 WHERE ht.ticketNum = 50002 
+->In customer enter customer id to be 6, ticket number to be 12 (Check constraint, should not exist) then enter ticket number to be 100, click refund ticket and then view my tickets 
+
+9.
+For our extra feature we developed a security system so that customers cannot tamper with other customer’s tickets and an invalid customer cannot use the system. 
+For example, enter a fake customer user. It doesn’t allow you to go in.
+Then log in through customer, and log in through employee. They have different windows!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
